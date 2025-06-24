@@ -24,7 +24,7 @@ class CalculatorButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
         
           ),
-          child: textValue==""?Icon(Icons.backspace, color: Colors.white,):Text(textValue, style: TextStyle(color: Color(textColor), fontSize: 34, fontWeight: FontWeight.w400),),
+          child: (textValue=="-1")?Icon(Icons.backspace, color: Colors.white,):Text(textValue, style: TextStyle(color: Color(textColor), fontSize: 34, fontWeight: FontWeight.w400),),
         ),
       ),
     );

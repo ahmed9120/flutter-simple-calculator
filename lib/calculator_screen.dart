@@ -1,5 +1,6 @@
 import 'package:calculator/widgets/calculator_button.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class CalculatorScreen extends StatefulWidget {
 
@@ -36,8 +37,17 @@ class _CalculatorScreenState extends State<CalculatorScreen>{
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
+                            CalculatorButton(onTap:onSqrtClicked ,textValue: "√",backGroundColor: 0xFF616161,textColor: 0xFFA5A5A5,),
+                            CalculatorButton(onTap:onOperatorClick ,textValue: "xˣ",backGroundColor: 0xFF616161,textColor: 0xFFA5A5A5,),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
                             CalculatorButton(onTap:onACClick ,textValue: "Ac",backGroundColor: 0xFF616161,textColor: 0xFFA5A5A5,),
-                            CalculatorButton(onTap:onBackSpaceClicked ,textValue: "",backGroundColor: 0xFF616161,),
+                            CalculatorButton(onTap:onBackSpaceClicked ,textValue: "-1",backGroundColor: 0xFF616161,),
                             CalculatorButton(onTap:onOperatorClick ,textValue: "/",backGroundColor: 0xFF005DB2,),
                           ],
                         ),
@@ -119,6 +129,7 @@ class _CalculatorScreenState extends State<CalculatorScreen>{
       case "-": res= (n1 - n2); break;
       case "/": if (n2 == 0){return "Error";} res= (n1 / n2); break;
       case "*": res= (n1 * n2); break;
+      case "xˣ": res= pow(n1, n2).toDouble(); break;
     }
     return res.toString();
   }
@@ -143,6 +154,9 @@ class _CalculatorScreenState extends State<CalculatorScreen>{
   }
 
   onEqualClick(String operator){
+    if(savedOperator==""){
+      return;
+    }
     String newNumber= resultText;
     var result= calculate(savedNumber, savedOperator, newNumber);
     resultText=result;
@@ -170,4 +184,16 @@ class _CalculatorScreenState extends State<CalculatorScreen>{
     resultText += operator;
   }
 
+  onSqrtClicked(String operator){
+    if(savedOperator.isEmpty){
+      if (double.parse(resultText) < 0) {
+        resultText = "Error";
+      } else {
+        resultText = sqrt(double.parse(resultText)).toString();
+      }
+    }else{
+      return;
+    }
+    setState(() {});
+  }
 }
